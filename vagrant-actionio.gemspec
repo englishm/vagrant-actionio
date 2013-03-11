@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'vagrant/actionio/version'
+require 'vagrant-actionio/version'
 
 Gem::Specification.new do |s|
   s.name          = 'vagrant-actionio'
-  s.version       = Vagrant::ActionIO::VERSION
+  s.version       = VagrantPlugins::ActionIO::VERSION
   s.platform      = Gem::Platform::RUBY
   s.authors       = 'Irrational Industries Inc.'
   s.email         = 'hello@action.io'

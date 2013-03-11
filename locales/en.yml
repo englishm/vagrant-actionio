@@ -1,5 +1,10 @@
 en:
   vagrant_actionio:
+    config:
+      access_token_required: |-
+        An access token must be specified via "access_token"
+      region_required: |-
+        A region must be specified via "region"
     errors:
       api_error: |-
         There was an error talking to Action.IO. The error message is shown below:

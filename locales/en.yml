@@ -1,0 +1,15 @@
+en:
+  vagrant_actionio:
+    errors:
+      api_error: |-
+        There was an error talking to Action.IO. The error message is shown below:
+
+        %{message}
+      rsync_error: |-
+        There was an error when attemping to rsync a shared folder.
+        Please inspect the error message below for more info.
+
+        Host path: %{hostpath}
+        Guest path: %{guestpath}
+        Error: %{stderr}
+

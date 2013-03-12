@@ -5,6 +5,7 @@ en:
         An access token must be specified via "access_token"
       region_required: |-
         A region must be specified via "region"
+
     errors:
       api_error: |-
         There was an error talking to Action.IO. The error message is shown below:
@@ -17,4 +18,16 @@ en:
         Host path: %{hostpath}
         Guest path: %{guestpath}
         Error: %{stderr}
+
+    states:
+      short_not_created: |-
+        not created
+      long_not_created: |-
+        The Action.IO box is not created. Run `vagrant up` to create it.
+
+      short_running: |-
+        running
+      long_running: |-
+        The Action.IO box is running. To stop this machine, you can run
+        `vagrant halt`. To destroy the machine, you can run `vagrant destroy`.
 

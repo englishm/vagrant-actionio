@@ -14,6 +14,8 @@ Gem::Specification.new do |s|
   s.description   = 'Enables Vagrant to manage boxes in Action.IO.'
   s.license       = 'MIT'
 
+  s.add_runtime_dependency 'oauth2', '~> 0.9.1'
+
   s.add_development_dependency 'bundler', '~> 1.3'
   s.add_development_dependency 'rake'
   s.add_development_dependency "rspec-core", "~> 2.13.0"

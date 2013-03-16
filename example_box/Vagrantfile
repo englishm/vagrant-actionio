@@ -1,8 +1,9 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-Vagrant.configure('2') do |config|
+Vagrant.configure("2") do |config|
   config.vm.provider :actionio do |aio|
-    aio.box_template = 'rails'
+    aio.region = "us-west-1"
+    aio.stack = "rails"
   end
 end

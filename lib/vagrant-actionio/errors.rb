@@ -11,6 +11,14 @@ module VagrantPlugins
         error_key(:api_error)
       end
 
+      class BoxNotYetStartedError < VagrantActionIOError
+        error_key(:box_not_yet_started_error)
+      end
+
+      class TimeoutError < VagrantActionIOError
+        error_key(:timeout_error)
+      end
+
       class RsyncError < VagrantActionIOError
         error_key(:rsync_error)
       end

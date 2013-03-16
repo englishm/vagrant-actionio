@@ -35,7 +35,7 @@ describe VagrantPlugins::ActionIO::Connection do
   describe '#verify_access_token' do
     context 'when request returns response code 200' do
       before do
-        connection.stub(:request).with(:get, '/scopes').and_return response
+        connection.should_receive(:request).with(:get, '/scopes').and_return response
       end
 
       context 'when response json contains boxes scope' do
@@ -64,13 +64,42 @@ describe VagrantPlugins::ActionIO::Connection do
         response = double 'response', status: 401
         error = StandardError.new('request error')
         error.stub(:response) { response }
-        connection.stub(:request).with(:get, '/scopes').and_raise error
+        connection.should_receive(:request).with(:get, '/scopes').and_raise error
       end
 
       it 'raises APIError' do
         expect {
           connection.verify_access_token
         }.to raise_error VagrantPlugins::ActionIO::Errors::APIError
+      end
+    end
+  end
+
+  describe '#fetch_box_state' do
+    context 'when request is successful' do
+      before do
+        json = '{"box":{"id":123,"state":"running"}}'
+        response = double 'response', stats: 200, body: json, parsed: JSON.parse(json)
+        connection.should_receive(:request).with(:get, '/boxes/123').and_return response
+      end
+
+      it "returns the box's state" do
+        state = connection.fetch_box_state(123)
+        expect(state).to eq :running
+      end
+    end
+
+    context 'when request returns 404' do
+      before do
+        response = double 'response', status: 404
+        error = StandardError.new('request error')
+        error.stub(:response) { response }
+        connection.should_receive(:request).with(:get, '/boxes/123').and_raise error
+      end
+
+      it 'returns nil' do
+        state = connection.fetch_box_state(123)
+        expect(state).to be_nil
       end
     end
   end

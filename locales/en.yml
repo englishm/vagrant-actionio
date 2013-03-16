@@ -1,16 +1,45 @@
 en:
   vagrant_actionio:
+    already_created: |-
+      The box already exists on Action.IO.
+    launching_box: |-
+      Launching a box on Action.IO with the following settings...
+    rsync_folder: |-
+      Rsyncing folder: %{hostpath} => %{guestpath}
+    warn_networks: |-
+      Warning! The Action.IO provider doesn't support any of the Vagrant
+      high-level network configurations (`config.vm.network`). They
+      will be silently ignored.
+    starting_box: |-
+      Starting new box on Action.IO...
+    ready: |-
+      Your box on Action.IO is booted and ready for use!
+
     config:
       access_token_required: |-
         An access token must be specified via "access_token"
+
       region_required: |-
         A region must be specified via "region"
 
     errors:
+      box_not_yet_started_error: |-
+        Box is not yet started.
+
+      invalid_access_token: |-
+        Access token is invalid.
+
+      invalid_access_token_scope: |-
+        Access token does not have "boxes" scope.
+
+      timeout_error: |-
+        Box creation timed out.
+
       api_error: |-
         There was an error talking to Action.IO. The error message is shown below:
 
         %{message}
+
       rsync_error: |-
         There was an error when attemping to rsync a shared folder.
         Please inspect the error message below for more info.

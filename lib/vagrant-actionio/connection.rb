@@ -16,7 +16,7 @@ module VagrantPlugins
       attr_accessor :client, :token
 
       def initialize(access_token_string)
-        options = { site: HOST, raise_errors: false }
+        options = { site: HOST }
         options[:ssl] = { verify_mode: OpenSSL::SSL::VERIFY_NONE } if !VERIFY_SSL
         @client = OAuth2::Client.new(OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, options)
         @token = OAuth2::AccessToken.new(client, access_token_string)
@@ -33,10 +33,10 @@ module VagrantPlugins
       def verify_access_token
         response = request(:get, '/scopes')
       rescue => e
-        if e.response.status == 401
-          raise Errors::APIError, 'Access token is invalid.'
+        if e.response && e.response.status == 401
+          raise Errors::APIError, 'invalid_access_token'
         else
-          raise Errors::APIError, e.message
+          raise e
         end
       else
         if response.status == 200
@@ -44,9 +44,24 @@ module VagrantPlugins
           if json.kind_of?(Hash) && json['scopes'].split.include?('boxes')
             return
           else
-            raise Errors::APIError, 'Access token does not have "boxes" scope.'
+            raise Errors::APIError, 'invalid_access_token_scope'
           end
         end
+      end
+
+      def fetch_box_state(box_id)
+        begin
+          response = request(:get, "/boxes/#{box_id}")
+        rescue => e
+          if e.respond_to?(:response) && e.response.status == 404
+            # The box can't be found
+            return nil
+          else
+            raise e
+          end
+        end
+
+        response.parsed['box']['state'].to_sym
       end
     end
   end

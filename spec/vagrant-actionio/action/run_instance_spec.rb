@@ -7,18 +7,16 @@ describe VagrantPlugins::ActionIO::Action::RunInstance do
   let(:actionio) { double 'connection', request: nil }
   let(:ui) { double 'ui', info: nil, warn: nil }
   let(:env) { { actionio: actionio, machine: machine, ui: ui } }
-  let(:instance) { VagrantPlugins::ActionIO::Action::RunInstance.new(app, env) }
+  let(:instance) { described_class.new(app, env) }
 
   describe '#create_box' do
-    before do
-      json = '{"box":{"id":777,"state":"provisioning"}}'
-      response = double 'response', status: 201, json: json, parsed: JSON.parse(json)
+    let(:json) { '{"box":{"id":777,"state":"provisioning"}}' }
+    let(:response) { double 'response', status: 201, json: json, parsed: JSON.parse(json) }
+
+    it "sets box's id in the environment" do
       actionio.should_receive(:request).with(:post, '/boxes', params: {
         box: { name: 'vagrant-e192ddeefb', region: 'arctic', box_template: 'scala' }
       }).and_return response
-    end
-
-    it "sets box's id in the environment" do
       instance.create_box(actionio, machine, 'vagrant-e192ddeefb', 'arctic', 'scala')
       expect(machine.id).to eq 777
     end

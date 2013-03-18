@@ -11,13 +11,13 @@ en:
       high-level network configurations (`config.vm.network`). They
       will be silently ignored.
     starting_box: |-
-      Starting new box on Action.IO...
+      Starting the box on Action.IO...
     ready: |-
-      Your box on Action.IO is booted and ready for use!
+      Your box on Action.IO is running and ready for use!
     not_created: |-
-      Your box on Action.IO is not created. Please run `vagrant up` first.
+      Your box on Action.IO is not created. Please create your box by running `vagrant up` first.
     not_running: |-
-      Your box on Action.IO is not running. Please start your box first.
+      Your box on Action.IO is not running. Please start your box by running `vagrant up` first.
 
     config:
       access_token_required: |-

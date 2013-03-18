@@ -46,15 +46,15 @@ module VagrantPlugins
 
           wait_for_box_to_start(env)
 
-          @logger.info("Time to instance ready: #{env[:metrics]["instance_ready_time"]}")
-
           if !env[:interrupted]
             # Ready and booted!
             env[:ui].info(I18n.t('vagrant_actionio.ready'))
           end
 
           # Terminate the instance if we were interrupted
-          terminate(env) if env[:interrupted]
+          #terminate(env) if env[:interrupted]
+
+          @logger.info("Time to instance ready: #{env[:metrics]["instance_ready_time"]}")
 
           @app.call(env)
         end
@@ -81,6 +81,14 @@ module VagrantPlugins
             end
           end
         end
+
+        #def terminate(env)
+          #destroy_env = env.dup
+          #destroy_env.delete(:interrupted)
+          #destroy_env[:config_validate] = false
+          #destroy_env[:force_confirm_destroy] = true
+          #env[:action_runner].run(Action.action_destroy, destroy_env)
+        #end
       end
     end
   end

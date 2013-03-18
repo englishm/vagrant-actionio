@@ -22,6 +22,12 @@ en:
       region_required: |-
         A region must be specified via "region"
 
+      ssh_private_key_path_required: |-
+        A path to an ssh private key must be specified via "ssh_private_key_path"
+
+      private_key_missing: |-
+        The specified SSH private key could not be found
+
     errors:
       box_not_yet_started_error: |-
         Box is not yet started.

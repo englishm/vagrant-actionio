@@ -62,6 +62,11 @@ module VagrantPlugins
 
         errors << I18n.t('vagrant_actionio.config.access_token_required') if @access_token.nil?
         errors << I18n.t('vagrant_actionio.config.region_required') if @region.nil?
+        errors << I18n.t('vagrant_actionio.config.ssh_private_key_path_required') if @ssh_private_key_path.nil?
+
+        if @ssh_private_key_path && !File.file?(File.expand_path(@ssh_private_key_path, machine.env.root_path))
+          errors << I18n.t('vagrant_actionio.config.private_key_missing')
+        end
 
         { 'Action.IO Provider' => errors }
       end

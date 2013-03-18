@@ -14,6 +14,10 @@ en:
       Starting new box on Action.IO...
     ready: |-
       Your box on Action.IO is booted and ready for use!
+    not_created: |-
+      Your box on Action.IO is not created. Please run `vagrant up` first.
+    not_running: |-
+      Your box on Action.IO is not running. Please start your box first.
 
     config:
       access_token_required: |-

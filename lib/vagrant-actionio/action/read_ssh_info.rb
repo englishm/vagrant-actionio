@@ -42,7 +42,7 @@ module VagrantPlugins
           # Read the info
           return {
             host: box_info['host'],
-            port: box_info['port'],
+            port: box_info['port'].to_s,
             private_key_path: config.ssh_private_key_path,
             username: 'action'
           }

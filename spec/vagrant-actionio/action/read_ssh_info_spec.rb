@@ -32,7 +32,7 @@ describe VagrantPlugins::ActionIO::Action::ReadSSHInfo do
         instance.call(env)
         expect(env[:machine_ssh_info]).to eq({
           host: 'foo-box-123.usw1.actionbox.io',
-          port: 12345,
+          port: '12345',
           private_key_path: '/home/action/.ssh/id_rsa',
           username: 'action'
         })

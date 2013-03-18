@@ -13,11 +13,6 @@ module VagrantPlugins
       # @return [String]
       attr_accessor :region
 
-      # The name of the box to be created on Action.IO.
-      #
-      # @return [String]
-      attr_accessor :box_name
-
       # The name of the Action.IO base stack (box template) to create the box.
       #
       # @return [String]
@@ -32,7 +27,6 @@ module VagrantPlugins
       def initialize(region_specific=false)
         @access_token         = UNSET_VALUE
         @region               = UNSET_VALUE
-        @box_name             = UNSET_VALUE
         @stack                = UNSET_VALUE
         @ssh_private_key_path = UNSET_VALUE
 
@@ -52,9 +46,6 @@ module VagrantPlugins
         # Default region is usw-1
         @region = 'us-west-1' if @region == UNSET_VALUE
 
-        # Box name defaults to nil
-        @box_name = nil if @box_name == UNSET_VALUE
-
         # Box base stack defaults to rails
         @stack = 'rails' if @stack == UNSET_VALUE
 
@@ -71,7 +62,6 @@ module VagrantPlugins
 
         errors << I18n.t('vagrant_actionio.config.access_token_required') if @access_token.nil?
         errors << I18n.t('vagrant_actionio.config.region_required') if @region.nil?
-        errors << I18n.t('vagrant_actionio.config.box_name_required') if @box_name.nil?
 
         { 'Action.IO Provider' => errors }
       end

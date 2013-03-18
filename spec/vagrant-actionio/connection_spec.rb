@@ -8,7 +8,6 @@ describe VagrantPlugins::ActionIO::Connection do
       expect(connection.client).to be_an OAuth2::Client
       expect(connection.client.id).to eq described_class::OAUTH_CLIENT_ID
       expect(connection.client.secret).to eq described_class::OAUTH_CLIENT_SECRET
-      expect(connection.client.options[:raise_errors]).to be_false
       expect(connection.token).to be_an OAuth2::AccessToken
       expect(connection.token.client).to eq connection.client
       expect(connection.token.token).to eq '4cc35570k3n'

@@ -2,6 +2,7 @@ require 'log4r'
 require 'vagrant/util/retryable'
 require 'vagrant-actionio/util/timer'
 require 'vagrant-actionio/errors'
+require 'securerandom'
 
 module VagrantPlugins
   module ActionIO
@@ -25,7 +26,7 @@ module VagrantPlugins
 
           # Get the configs
           config = machine.provider_config
-          box_name = config.box_name
+          box_name = "vagrant-#{SecureRandom.hex 5}"
           region = config.region
           stack = config.stack
 

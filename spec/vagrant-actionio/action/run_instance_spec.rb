@@ -14,12 +14,12 @@ describe VagrantPlugins::ActionIO::Action::RunInstance do
       json = '{"box":{"id":777,"state":"provisioning"}}'
       response = double 'response', status: 201, json: json, parsed: JSON.parse(json)
       actionio.should_receive(:request).with(:post, '/boxes', params: {
-        box: { name: 'cold-box', region: 'arctic', box_template: 'scala' }
+        box: { name: 'vagrant-e192ddeefb', region: 'arctic', box_template: 'scala' }
       }).and_return response
     end
 
     it "sets box's id in the environment" do
-      instance.create_box(actionio, machine, 'cold-box', 'arctic', 'scala')
+      instance.create_box(actionio, machine, 'vagrant-e192ddeefb', 'arctic', 'scala')
       expect(machine.id).to eq 777
     end
   end

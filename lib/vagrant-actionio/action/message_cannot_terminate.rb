@@ -1,15 +1,13 @@
 module VagrantPlugins
   module ActionIO
     module Action
-      # This can be used with "Call" built-in to check if the machine
-      # is stopped and branch in the middleware.
-      class IsStopped
+      class MessageCannotTerminate
         def initialize(app, env)
           @app = app
         end
 
         def call(env)
-          env[:result] = env[:machine].state.id == :stopped
+          env[:ui].info(I18n.t('vagrant_actionio.cannot_terminate'))
           @app.call(env)
         end
       end

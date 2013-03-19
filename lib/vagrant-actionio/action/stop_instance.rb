@@ -6,47 +6,47 @@ module VagrantPlugins
   module ActionIO
     module Action
       # This runs the configured instance.
-      class StartInstance
+      class StopInstance
         include Vagrant::Util::Retryable
 
         def initialize(app, env)
           @app    = app
-          @logger = Log4r::Logger.new('vagrant_actionio::action::start_instance')
+          @logger = Log4r::Logger.new('vagrant_actionio::action::stop_instance')
         end
 
         def call(env)
           actionio = env[:actionio]
           machine = env[:machine]
 
-          start_box(actionio, machine)
+          stop_box(actionio, machine)
 
           # Poll server to check whether the box is ready
-          env[:ui].info(I18n.t('vagrant_actionio.starting_box'))
+          env[:ui].info(I18n.t('vagrant_actionio.stopping_box'))
 
           # Wait 10 seconds first
           sleep 10.0
 
-          wait_for_box_to_start(env)
+          wait_for_box_to_stop(env)
 
-          env[:ui].info(I18n.t('vagrant_actionio.ready'))
+          env[:ui].info(I18n.t('vagrant_actionio.stopped'))
 
           @app.call(env)
         end
 
-        def start_box(actionio, machine)
-          actionio.request(:put, "/boxes/#{machine.id}/start")
+        def stop_box(actionio, machine)
+          actionio.request(:put, "/boxes/#{machine.id}/stop")
         end
 
-        def wait_for_box_to_start(env)
+        def wait_for_box_to_stop(env)
           actionio = env[:actionio]
           machine = env[:machine]
-          retryable(on: Errors::BoxNotYetStartedError, tries: 10, sleep: 3.0) do
+          retryable(on: Errors::BoxNotYetStoppedError, tries: 10, sleep: 3.0) do
             # If we're interrupted don't worry about waiting
             next if env[:interrupted]
 
             # check for the box's status
-            if actionio.fetch_box_state(machine.id) != :running
-              raise Errors::BoxNotYetStartedError
+            if actionio.fetch_box_state(machine.id) != :stopped
+              raise Errors::BoxNotYetStoppedError
             end
           end
         end

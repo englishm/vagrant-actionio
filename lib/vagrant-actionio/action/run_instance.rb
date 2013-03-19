@@ -19,10 +19,9 @@ module VagrantPlugins
         def call(env)
           # Initialize metrics if they haven't been
           env[:metrics] ||= {}
-          @app.call(env)
 
-          machine = env[:machine]
           actionio = env[:actionio]
+          machine = env[:machine]
 
           # Get the configs
           config = machine.provider_config
@@ -82,13 +81,13 @@ module VagrantPlugins
           end
         end
 
-        #def terminate(env)
-          #destroy_env = env.dup
-          #destroy_env.delete(:interrupted)
-          #destroy_env[:config_validate] = false
-          #destroy_env[:force_confirm_destroy] = true
-          #env[:action_runner].run(Action.action_destroy, destroy_env)
-        #end
+        def terminate(env)
+          destroy_env = env.dup
+          destroy_env.delete(:interrupted)
+          destroy_env[:config_validate] = false
+          destroy_env[:force_confirm_destroy] = true
+          env[:action_runner].run(Action.action_destroy, destroy_env)
+        end
       end
     end
   end

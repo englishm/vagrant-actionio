@@ -2,26 +2,41 @@ en:
   vagrant_actionio:
     already_created: |-
       The box already exists on Action.IO.
+    already_terminated: |-
+      The box is already terminated on Action.IO.
+    cannot_terminate: |-
+      The box needs to be in either "running" or "stopped" state to be terminatable.
     launching_box: |-
       Launching a box on Action.IO with the following settings...
-    rsync_folder: |-
-      Rsyncing folder: %{hostpath} => %{guestpath}
-    warn_networks: |-
-      Warning! The Action.IO provider doesn't support any of the Vagrant
-      high-level network configurations (`config.vm.network`). They
-      will be silently ignored.
-    starting_box: |-
-      Starting the box on Action.IO...
-    ready: |-
-      Your box on Action.IO is running and ready for use!
     not_created: |-
       Your box on Action.IO is not created. Please create your box by running `vagrant up` first.
     not_running: |-
       Your box on Action.IO is not running. Please start your box by running `vagrant up` first.
+    ready: |-
+      Your box on Action.IO is running and ready for use!
+    rsync_folder: |-
+      Rsyncing folder: %{hostpath} => %{guestpath}
+    starting_box: |-
+      Starting the box on Action.IO...
+    stopped: |-
+      Your box on Action.IO is stopped.
+    stopping_box: |-
+      Stopping the box on Action.IO...
+    terminated: |-
+      Your box on Action.IO is terminated.
+    terminating_box: |-
+      Terminating the box on Action.IO...
+    warn_networks: |-
+      Warning! The Action.IO provider doesn't support any of the Vagrant
+      high-level network configurations (`config.vm.network`). They
+      will be silently ignored.
 
     config:
       access_token_required: |-
         An access token must be specified via "access_token"
+
+      private_key_missing: |-
+        The specified SSH private key could not be found
 
       region_required: |-
         A region must be specified via "region"
@@ -29,26 +44,26 @@ en:
       ssh_private_key_path_required: |-
         A path to an ssh private key must be specified via "ssh_private_key_path"
 
-      private_key_missing: |-
-        The specified SSH private key could not be found
-
     errors:
+      api_error: |-
+        There was an error talking to Action.IO. The error message is shown below:
+
+        %{message}
+
       box_not_yet_started_error: |-
         Box is not yet started.
+
+      box_not_yet_stopped_error: |-
+        Box is not yet stopped.
+
+      box_not_yet_terminated_error: |-
+        Box is not yet terminated.
 
       invalid_access_token: |-
         Access token is invalid.
 
       invalid_access_token_scope: |-
         Access token does not have "boxes" scope.
-
-      timeout_error: |-
-        Box creation timed out.
-
-      api_error: |-
-        There was an error talking to Action.IO. The error message is shown below:
-
-        %{message}
 
       rsync_error: |-
         There was an error when attemping to rsync a shared folder.
@@ -58,11 +73,19 @@ en:
         Guest path: %{guestpath}
         Error: %{stderr}
 
+      timeout_error: |-
+        Box creation timed out.
+
     states:
       short_not_created: |-
         not created
       long_not_created: |-
         The Action.IO box is not created. Run `vagrant up` to create it.
+
+      short_provisioning: |-
+        provisioning
+      long_provisioning: |-
+        The Action.IO box is being created.
 
       short_running: |-
         running
@@ -70,3 +93,27 @@ en:
         The Action.IO box is running. To stop this machine, you can run
         `vagrant halt`. To destroy the machine, you can run `vagrant destroy`.
 
+      short_starting: |-
+        starting
+      long_starting: |-
+        The Action.IO box is starting.
+
+      short_stopped: |-
+        stopped
+      long_stopped: |-
+        The Action.IO box is stopped. Run `vagrant up` to start it.
+
+      short_stopping: |-
+        stopping
+      long_stopping: |-
+        The Action.IO box is stopping.
+
+      short_terminated: |-
+        terminated
+      long_terminated: |-
+        The Action.IO box is terminated.
+
+      short_terminating: |-
+        terminating
+      long_terminating: |-
+        The Action.IO box is terminating.

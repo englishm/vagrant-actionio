@@ -1,6 +1,6 @@
-require 'vagrant-actionio/action/start_instance'
+require 'vagrant-actionio/action/terminate_instance'
 
-describe VagrantPlugins::ActionIO::Action::StartInstance do
+describe VagrantPlugins::ActionIO::Action::TerminateInstance do
   let(:app) { double 'app', call: nil }
   let(:config) { double 'config', region: 'ap-southeast-1', box_name: 'petes-node-box', stack: 'nodejs' }
   let(:machine) { OpenStruct.new id: 777, provider_config: config }
@@ -9,13 +9,13 @@ describe VagrantPlugins::ActionIO::Action::StartInstance do
   let(:env) { { actionio: actionio, machine: machine, ui: ui } }
   let(:instance) { described_class.new(app, env) }
 
-  describe '#start_box' do
-    let(:json) { '{"box":{"id":777,"state":"starting"}}' }
+  describe '#terminate_box' do
+    let(:json) { '{"box":{"id":777,"state":"terminating"}}' }
     let(:response) { double 'response', status: 200, json: json, parsed: JSON.parse(json) }
 
     it 'runs the request' do
-      actionio.should_receive(:request).with(:put, '/boxes/777/start').and_return response
-      instance.start_box(actionio, machine)
+      actionio.should_receive(:request).with(:delete, '/boxes/777').and_return response
+      instance.terminate_box(actionio, machine)
     end
   end
 end

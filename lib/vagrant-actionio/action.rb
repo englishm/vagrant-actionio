@@ -9,8 +9,33 @@ module VagrantPlugins
       include Vagrant::Action::Builtin
 
       # This action is called to terminate the remote machine.
-      #def self.action_destroy
-      #end
+      def self.action_destroy
+        Vagrant::Action::Builder.new.tap do |b|
+          b.use ConfigValidate
+          b.use ConnectActionIO
+          b.use Call, IsTerminated do |env, b2|
+            if env[:result]
+              b2.use MessageAlreadyTerminated
+              b2.use RemoveMachineId
+              next
+            end
+
+            b2.use Call, IsRunning do |env, b3|
+              if env[:result]
+                b3.use StopInstance
+              end
+
+              b3.use Call, IsStopped do |env, b4|
+                if !env[:result]
+                  b4.use MessageCannotTerminate
+                  next
+                end
+                b4.use TerminateInstance
+              end
+            end
+          end
+        end
+      end
 
       # This action is called when `vagrant provision` is called.
       #def self.action_provision
@@ -87,20 +112,26 @@ module VagrantPlugins
 
       # The autoload farm
       action_root = Pathname.new(File.expand_path('../action', __FILE__))
-      autoload :ConnectActionIO, action_root.join('connect_actionio')
-      autoload :IsCreated, action_root.join('is_created')
-      autoload :IsRunning, action_root.join('is_running')
-      autoload :IsStopped, action_root.join('is_stopped')
-      autoload :MessageAlreadyCreated, action_root.join('message_already_created')
-      autoload :MessageNotCreated, action_root.join('message_not_created')
-      autoload :MessageNotRunning, action_root.join('message_not_running')
-      autoload :ReadSSHInfo, action_root.join('read_ssh_info')
-      autoload :ReadState, action_root.join('read_state')
-      autoload :RunInstance, action_root.join('run_instance')
-      autoload :StartInstance, action_root.join('start_instance')
-      #autoload :SyncFolders, action_root.join('sync_folders')
-      autoload :TimedProvision, action_root.join('timed_provision')
-      autoload :WarnNetworks, action_root.join('warn_networks')
+      autoload :ConnectActionIO,          action_root.join('connect_actionio')
+      autoload :IsCreated,                action_root.join('is_created')
+      autoload :IsRunning,                action_root.join('is_running')
+      autoload :IsStopped,                action_root.join('is_stopped')
+      autoload :IsTerminated,             action_root.join('is_terminated')
+      autoload :MessageAlreadyCreated,    action_root.join('message_already_created')
+      autoload :MessageAlreadyTerminated, action_root.join('message_already_terminated')
+      autoload :MessageCannotTerminate,   action_root.join('message_cannot_terminate')
+      autoload :MessageNotCreated,        action_root.join('message_not_created')
+      autoload :MessageNotRunning,        action_root.join('message_not_running')
+      autoload :ReadSSHInfo,              action_root.join('read_ssh_info')
+      autoload :ReadState,                action_root.join('read_state')
+      autoload :RunInstance,              action_root.join('run_instance')
+      autoload :RemoveMachineId,          action_root.join('remove_machine_id')
+      autoload :StartInstance,            action_root.join('start_instance')
+      autoload :StopInstance,             action_root.join('stop_instance')
+      #autoload :SyncFolders,              action_root.join('sync_folders')
+      autoload :TerminateInstance,        action_root.join("terminate_instance")
+      autoload :TimedProvision,           action_root.join('timed_provision')
+      autoload :WarnNetworks,             action_root.join('warn_networks')
     end
   end
 end

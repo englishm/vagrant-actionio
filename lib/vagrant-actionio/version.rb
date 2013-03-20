@@ -1,5 +1,5 @@
 module VagrantPlugins
   module ActionIO
-    VERSION = '0.0.1'
+    VERSION = '0.0.9'
   end
 end

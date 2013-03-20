@@ -7,8 +7,8 @@ Gem::Specification.new do |s|
   s.name          = 'vagrant-actionio'
   s.version       = VagrantPlugins::ActionIO::VERSION
   s.platform      = Gem::Platform::RUBY
-  s.authors       = 'Irrational Industries Inc.'
-  s.email         = 'hello@action.io'
+  s.authors       = ['Irrational Industries Inc.', 'Peter Jihoon Kim', 'Arun Thampi', 'Mitchell Hashimoto']
+  s.email         = ['hello@action.io', 'raingrove@gmail.com', 'arun.thampi@gmail.com', 'mitchell.hashimoto@gmail.com']
   s.homepage      = 'https://www.action.io/'
   s.summary       = 'Enables Vagrant to manage boxes in Action.IO.'
   s.description   = 'Enables Vagrant to manage boxes in Action.IO.'

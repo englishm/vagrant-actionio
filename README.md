@@ -67,6 +67,7 @@ These can be set like typical provider-specific configuration:
 ```ruby
 Vagrant.configure("2") do |config|
   config.vm.box = "actionio-dummy"
+  config.vm.box_url = "https://s3.amazonaws.com/vagrant-actionio/actionio-dummy.box"
 
   config.vm.provider :actionio do |aio|
     aio.access_token = "abcdefghijklmnopqrstuvwxyz0123456789abcdefghijklmnopqrstuvwxyz01"

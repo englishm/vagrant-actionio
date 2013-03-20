@@ -12,6 +12,8 @@ en:
       Your box on Action.IO is not created. Please create your box by running `vagrant up` first.
     not_running: |-
       Your box on Action.IO is not running. Please start your box by running `vagrant up` first.
+    provisioning_not_yet_supported: |-
+      Vagrant provisioning is coming soon, but not yet supported. Please check https://github.com/action-io/vagrant-actionio for updates.
     ready: |-
       Your box on Action.IO is running and ready for use!
     rsync_folder: |-

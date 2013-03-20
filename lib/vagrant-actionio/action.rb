@@ -40,16 +40,17 @@ module VagrantPlugins
       # This action is called when `vagrant provision` is called.
       def self.action_provision
         Vagrant::Action::Builder.new.tap do |b|
-          b.use ConfigValidate
-          b.use Call, IsCreated do |env, b2|
-            if !env[:result]
-              b2.use MessageNotCreated
-              next
-            end
+          b.use MessageProvisioningNotYetSupported
+          #b.use ConfigValidate
+          #b.use Call, IsCreated do |env, b2|
+            #if !env[:result]
+              #b2.use MessageNotCreated
+              #next
+            #end
 
-            b2.use Provision
-            b2.use SyncFolders
-          end
+            #b2.use Provision
+            #b2.use SyncFolders
+          #end
         end
       end
 
@@ -114,10 +115,11 @@ module VagrantPlugins
               next
             end
 
-            b2.use TimedProvision
+            #b2.use TimedProvision
             b2.use SyncFolders
             b2.use WarnNetworks
             b2.use RunInstance
+            b2.use MessageProvisioningNotYetSupported
           end
         end
       end
@@ -134,6 +136,7 @@ module VagrantPlugins
       autoload :MessageCannotTerminate,   action_root.join('message_cannot_terminate')
       autoload :MessageNotCreated,        action_root.join('message_not_created')
       autoload :MessageNotRunning,        action_root.join('message_not_running')
+      autoload :MessageProvisioningNotYetSupported, action_root.join('message_provisioning_not_yet_supported')
       autoload :ReadSSHInfo,              action_root.join('read_ssh_info')
       autoload :ReadState,                action_root.join('read_state')
       autoload :RunInstance,              action_root.join('run_instance')

@@ -3,6 +3,8 @@ require 'vagrant-actionio/errors'
 require 'vagrant-actionio/version'
 require 'oauth2'
 
+ENV['SSL_CERT_FILE'] = File.join(File.expand_path('../../../', __FILE__), '/data/cacert.pem')
+
 module VagrantPlugins
   module ActionIO
     class Connection
